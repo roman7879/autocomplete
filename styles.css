@@ -1,0 +1,82 @@
+body {
+/*  background-image: url("woodBackground.jpg"); */
+  font-size: 1em;
+  font-family: arial, sans-serif;
+  color: #00102A;
+}
+
+p { font-size: 1em; font-family: Helvetica; margin: .83em 0 }
+
+#keyword {
+	width: 200px;
+	font-size: 1em;
+}
+
+#results {
+	width: 204px;
+	position: absolute;
+	border: 1px solid #c0c0c0;
+}
+
+#results .item {
+	padding: 3px;
+	font-family: arial, sans-serif;
+	border-bottom: 1px solid #c0c0c0;
+}
+
+#results .item:last-child {
+	border-bottom: 0px;
+}
+
+#results .item:hover {
+	background-color: #CCCCCC;
+	cursor: pointer;
+}
+
+#centered {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    padding-top: 20px;
+    padding-bottom: 20px;
+   
+}
+
+td, th {
+    border: 0px solid #dddddd;
+    text-align: left;
+    padding: 4px;
+    width: 250px;
+}
+
+tr:nth-child(even) {
+    background-color: #CCCCCC;
+}
+
+
+ /* unvisited link */
+a:link {
+    color: #00102A;
+}
+
+/* visited link */
+a:visited {
+    color: #00102A;
+}
+
+/* mouse over link */
+a:hover {
+    color: hotpink;
+}
+
+/* selected link */
+a:active {
+    color: hotpink;
+}
