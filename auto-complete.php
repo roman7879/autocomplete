@@ -2,14 +2,25 @@
 
 $keyword=$_GET["keyword"];
 
-require('dbConnect.php');
-require('database.php');
+require "dataArr.php";
 
-if (!isset($_GET['keyword'])) {
-	die();
+$result = array();
+
+$maxResults=10;
+$counter=1;
+
+foreach ($productInfo as $row) {
+	if($counter <= $maxResults) {
+	$productName = $row[ "label" ];
+        if ( strpos( strtoupper($productName), strtoupper($keyword) )
+          !== false ) {
+                array_push( $result, $row );
+$counter++;
 }
 
-//$keyword = $_GET['keyword'];
-$data = searchForKeyword($keyword);
-echo json_encode($data);
+} //if loop
+
+} //foreach loop
+echo json_encode( $result );
+
 ?>

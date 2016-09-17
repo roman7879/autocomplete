@@ -12,9 +12,9 @@ $( document ).ready(function() {
 				//	for(var key in value) {
 				//	$('#results').append('<div class="item">' + value[key] + '</div>');
 				//	console.log('key: ' + key + '\n' + 'value: ' + value[key]);
-					$('#results').append('<div class="item">' + '<a href=getProduct.php?id=' + value['id'] + '>' + value['name'] + '</a>' + '</div>');
+					$('#results').append('<div class="item">' + '<a href=getProduct.php?id=' + value['value'] + '>' + value['label'] + '</a>' + '</div>');
 					
-//					}
+				//	}
 				
 				
 })
