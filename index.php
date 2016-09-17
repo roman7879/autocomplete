@@ -2,7 +2,7 @@
 ?>
 <html>
 <head>
-  <title>Auto-complete tutorial Test</title>
+  <title>Auto Complete Prototype on GCP</title>
   <link rel="stylesheet" type="text/css" href="stylesIndex.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="auto-complete.js"></script>
