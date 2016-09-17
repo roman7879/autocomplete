@@ -20,7 +20,7 @@ if($keyword) {
             die('Could not connect to the database: ' . mysql_error());
 }
 
-	$sql = 'SELECT *  FROM material_info WHERE ' . 'name LIKE ? ' . 'ORDER BY name LIMIT 10';
+	$sql = 'SELECT name, id, color, category, dimensions, Price, thickness, availability FROM material_info WHERE ' . 'name LIKE ? ' . 'ORDER BY name LIMIT 10';
         $stmt = $conn->prepare($sql);
 
 	if($stmt === false) {
@@ -31,10 +31,9 @@ if($keyword) {
 
 	$stmt->execute();
 
-        $res = $stmt->get_result();
-
-
-        $row_cnt = $res->num_rows;
+	$res = $stmt->bind_result($name,$id, $color, $category, $dimensions, $Price, $thickness, $availability);
+        $stmt->store_result();
+        $row_cnt = $stmt->num_rows;
 
 	echo    "<b>Search Results: " . $row_cnt . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=index.php>Return to Search</a></b><br><hr>";
 	
@@ -42,19 +41,17 @@ if($keyword) {
 
 	$cloudStorageURL = "https://storage.googleapis.com/weighty-smoke-142717/productImg/";
 
-        while($row = $res->fetch_array(MYSQLI_ASSOC)) {
+	while($stmt->fetch()) {
 	echo "<table><tbody><tr>";	        
-	echo "<td><b>Product Name:</b> " . $row[name] . "</td>";
-	echo "<td rowspan=7><img src=" . $cloudStorageURL . $row['id'] . ".jpg" . " height=200 width=300/></td></tr>";
-//	echo '<td rowspan="7"><img src="data:image/jpeg;base64,'.base64_encode( $row['Picture'] ).'" height=200 width=300/></td></tr>';
-        echo "<tr><td><b>Color:</b> " . $row[color] . "</td></tr>";
-        echo "<tr><td><b>Category:</b> " . $row[category] . "</td></tr>";
-        echo "<tr><td><b>Dimentions:</b> " . $row[dimensions] . "</td></tr>";
-        echo "<tr><td><b>Price:</b> $" . $row[Price] . "</td></tr>";
-        echo "<tr><td><b>Thickness:</b> " . $row[thickness] . "</td></tr>";
-        echo "<tr><td><b>Availability:</b> " . $row[availability] . "</td></tr>";
+	echo "<td><b>Product Name:</b> " . $name . "</td>";
+	echo "<td rowspan=7><img src=" . $cloudStorageURL . $id . ".jpg" . " height=200 width=300/></td></tr>";
+        echo "<tr><td><b>Color:</b> " . $color . "</td></tr>";
+        echo "<tr><td><b>Category:</b> " . $category . "</td></tr>";
+        echo "<tr><td><b>Dimentions:</b> " . $dimensions . "</td></tr>";
+        echo "<tr><td><b>Price:</b> $" . $Price . "</td></tr>";
+        echo "<tr><td><b>Thickness:</b> " . $thickness . "</td></tr>";
+        echo "<tr><td><b>Availability:</b> " . $availability . "</td></tr>";
 	echo "</tbody></table><hr>";
-//	echo "<br><br>";
         $counter++;
 	     }
         $conn = null;
@@ -65,12 +62,12 @@ if($id) {
 
 	require "dbConnect.php";
 
-	$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName, $dbPort, $dbSocket);
+	$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
         if (! $conn) {
             die('Could not connect to the database: ' . mysql_error());
 }
 
-	$sql = 'SELECT *  FROM material_info WHERE ' . 'id = ? ';
+	$sql = 'SELECT name, id, color, category, dimensions, Price, thickness, availability FROM material_info WHERE ' . 'id = ? ';
         $stmt = $conn->prepare($sql);
 
 	if($stmt === false) {
@@ -80,29 +77,30 @@ if($id) {
         $stmt->bind_param('s', $id);
 
 	$stmt->execute();
+	
+	$res = $stmt->bind_result($name,$id, $color, $category, $dimensions, $Price, $thickness, $availability);
+        $stmt->store_result();
+        $row_cnt = $stmt->num_rows;
 
-        $res = $stmt->get_result();
-
-
-        $row_cnt = $res->num_rows;
 
 	echo    "<b>Search Results: " . $row_cnt . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=index.php>Return to Search</a></b><br><hr>";
 	
 	$cloudStorageURL = "https://storage.googleapis.com/weighty-smoke-142717/productImg/";
 
-        while($row = $res->fetch_array(MYSQLI_ASSOC)) {
-	echo "<table><tbody><tr>";	        
-	echo "<td><b>Product Name:</b> " . $row[name] . "</td>";
-	echo "<td rowspan=7><img src=" . $cloudStorageURL . $row['id'] . ".jpg" . " height=200 width=300/></td></tr>";
-//	echo '<td rowspan="7"><img src="data:image/jpeg;base64,'.base64_encode( $row['Picture'] ).'" height=200 width=300/></td></tr>';
-        echo "<tr><td><b>Color:</b> " . $row[color] . "</td></tr>";
-        echo "<tr><td><b>Category:</b> " . $row[category] . "</td></tr>";
-        echo "<tr><td><b>Dimentions:</b> " . $row[dimensions] . "</td></tr>";
-        echo "<tr><td><b>Price:</b> $" . $row[Price] . "</td></tr>";
-        echo "<tr><td><b>Thickness:</b> " . $row[thickness] . "</td></tr>";
-        echo "<tr><td><b>Availability:</b> " . $row[availability] . "</td></tr>";
-	echo "</tbody></table><hr>";
-	     }
+	while($stmt->fetch()) {
+        echo "<table><tbody><tr>";              
+        echo "<td><b>Product Name:</b> " . $name . "</td>";
+        echo "<td rowspan=7><img src=" . $cloudStorageURL . $id . ".jpg" . " height=200 width=300/></td></tr>";
+        echo "<tr><td><b>Color:</b> " . $color . "</td></tr>";
+        echo "<tr><td><b>Category:</b> " . $category . "</td></tr>";
+        echo "<tr><td><b>Dimentions:</b> " . $dimensions . "</td></tr>";
+        echo "<tr><td><b>Price:</b> $" . $Price . "</td></tr>";
+        echo "<tr><td><b>Thickness:</b> " . $thickness . "</td></tr>";
+        echo "<tr><td><b>Availability:</b> " . $availability . "</td></tr>";
+        echo "</tbody></table><hr>";
+        $counter++;
+             }
+
         $conn = null;
         
 }

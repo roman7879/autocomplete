@@ -32,8 +32,9 @@ require "dbConnect.php";
 
 	$stmt->execute();
 
-	$res = $stmt->get_result();
-	$row_cnt = $res->num_rows;
+	$res = $stmt->bind_result($name,$id);
+        $stmt->store_result();
+        $row_cnt = $stmt->num_rows;
 
 //	echo	"<b>Search Results for " . $keyword .": " . $row_cnt . "</b><br><hr>";
 	
@@ -44,10 +45,18 @@ require "dbConnect.php";
 		$results[$keyArr] = $valueArr;
 			    }
 	else {
-	while($row = $res->fetch_array(MYSQLI_ASSOC)) {
-	$results[] = $row;
- 	     }
+        $keyArrName = 'name';
+        $keyArrId = 'id';
+        $results = array();
+
+        while($stmt->fetch()) {
+        $results[] = array(
+        "id"   => $id,
+        "name" => $name
+);
 }
+}
+
 	$conn = null;
 	
 	return $results;

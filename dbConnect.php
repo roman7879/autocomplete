@@ -1,7 +1,7 @@
 <?php
 
-//$dbHost="146.148.45.253";
-$dbHost=null;
+$dbHost="146.148.45.253";
+//$dbHost=null;
 $dbUser="root";
 $dbPass="v1rtualized!";
 //$dbPass="";
